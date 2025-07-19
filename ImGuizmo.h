@@ -217,6 +217,11 @@ namespace IMGUIZMO_NAMESPACE
    IMGUI_API void ViewManipulate(float* view, const float* projection, OPERATION operation, MODE mode, float* matrix, float length, ImVec2 position, ImVec2 size, ImU32 backgroundColor);
 
    IMGUI_API void SetID(int id);
+   
+   // By default inputs are clipped by the owning window which is found from the draw list
+   // but if you want to ignore that and only clip from what was set in SetRect then set this to true
+   // default is false
+   IMGUI_API void SetIgnoreOwningWindow(bool ignore);
 
    // return true if the cursor is over the operation's gizmo
    IMGUI_API bool IsOver(OPERATION op);

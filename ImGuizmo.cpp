@@ -754,6 +754,8 @@ namespace IMGUIZMO_NAMESPACE
       float mDisplayRatio = 1.f;
 
       bool mIsOrthographic = false;
+      
+      bool ignoreOwningWindow = false;
 
       int mActualID = -1;
       int mEditingID = -1;
@@ -925,6 +927,11 @@ namespace IMGUIZMO_NAMESPACE
 
    static bool IsHoveringWindow()
    {
+      if (gContext.ignoreOwningWindow)
+      {
+          return ImGui::IsMouseHoveringRect( { gContext.mX, gContext.mY }, { gContext.mXMax, gContext.mYMax }, false);
+      }
+       
       ImGuiContext& g = *ImGui::GetCurrentContext();
       ImGuiWindow* window = ImGui::FindWindowByName(gContext.mDrawList->_OwnerName);
       if (g.HoveredWindow == window)   // Mouse hovering drawlist window
@@ -2485,6 +2492,11 @@ namespace IMGUIZMO_NAMESPACE
    void SetID(int id)
    {
       gContext.mActualID = id;
+   }
+   
+   void SetIgnoreOwningWindow(bool ignore)
+   {
+      gContext.ignoreOwningWindow = ignore;
    }
 
    void AllowAxisFlip(bool value)
